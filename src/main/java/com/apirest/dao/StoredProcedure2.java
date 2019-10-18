@@ -1,4 +1,4 @@
-package com.apirest.service;
+package com.apirest.dao;
 
 import com.apirest.model.Book;
 

@@ -1,4 +1,4 @@
-package com.apirest.service;
+package com.apirest.dao;
 
 import com.apirest.model.Book;
 import org.slf4j.Logger;
@@ -19,17 +19,15 @@ import java.util.Optional;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 @Component
-public class SPs_Book {
+public class BookDao {
 
-    private static final Logger log = LoggerFactory.getLogger(SPs_Book.class);
-
+    private static final Logger log = LoggerFactory.getLogger(BookDao.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
     //Variables SimpleJdbcCall de Procedimientos Almacenados
     private SimpleJdbcCall get_book_by_id;
     private SimpleJdbcCall get_book_by_name;
-    
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -43,17 +41,13 @@ public class SPs_Book {
                 .withProcedureName("get_book_by_name")
                 .returningResultSet("o_c_book",
                         BeanPropertyRowMapper.newInstance(Book.class));
-        
+
     }
 
-    public Book getById(Long id) {
+    public Optional getById(Long id) {
 
-        log.info("SP_Nuevo...");
-        Book book = findById(id).orElseThrow(IllegalArgumentException::new);
-        return book;
-    }   
-    Optional<Book> findById(Long id) {
-        //p_id nombre del parametro en el sp
+        log.info("SP_Nuevo...");        
+        
         SqlParameterSource in = new MapSqlParameterSource().addValue("p_id", id);
         Optional result = Optional.empty();
 
@@ -72,15 +66,14 @@ public class SPs_Book {
             // ORA-01403: no data found, or any java.sql.SQLException
             System.err.println(e.getMessage());
         }
+        
         return result;
     }
+
+
     public List<Book> getAllLikeByName(String name) {
 
         log.info("Creating Store Procedures and Function...");
-        return findBookByName(name);
-
-    }
-    List<Book> findBookByName(String name) {
 
         SqlParameterSource paramaters = new MapSqlParameterSource().addValue("p_name", name);
 
@@ -92,5 +85,6 @@ public class SPs_Book {
             return (List) out.get("o_c_book");
         }
     }
+
 
 }

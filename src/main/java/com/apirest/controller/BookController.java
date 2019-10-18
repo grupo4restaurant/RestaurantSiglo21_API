@@ -6,8 +6,9 @@
 package com.apirest.controller;
 
 import com.apirest.model.Book;
-import com.apirest.service.SPs_Book;
+import com.apirest.dao.BookDao;
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class BookController {
     
    
     @Autowired
-    SPs_Book storedProcedure_nuevo;
+    BookDao storedProcedure_nuevo;
 
     @Bean
     public LobHandler lobHandler() {
@@ -39,8 +40,8 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    public Book ObtenerPorId(@PathVariable("id") long id) {
-        Book book = storedProcedure_nuevo.getById(id);
+    public Optional ObtenerPorId(@PathVariable("id") long id) {
+        Optional book = storedProcedure_nuevo.getById(id);
         return book;
     }
     @GetMapping("/books/{name}")
