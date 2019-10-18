@@ -6,7 +6,7 @@
 
     <artifactId>spring-jdbc</artifactId>
     <packaging>jar</packaging>
-    <name>Spring Boot JDBC</name>
+    <name>Spring Boot JDBC GitHub</name>
     <version>1.0</version>
 
     <parent>
