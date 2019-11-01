@@ -57,8 +57,13 @@ public class ProductoController {
     }
 
     @GetMapping("/producto/{id}")
-    public List<Producto> ObtenerUsuarioPorID(@PathVariable("id") long id) {               
+    public List<Producto> ObtenerProductoPorID(@PathVariable("id") long id) {               
         return dao.obtener(id);
+    }
+    
+    @GetMapping("/productos")
+    public List<Producto> ObtenerProductos() {               
+        return dao.obtenerTodo();
     }
     
 }

@@ -30,6 +30,7 @@ public class ProductoDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
+    private SimpleJdbcCall obtenerTodo;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -41,6 +42,10 @@ public class ProductoDao {
         // Convert SYS_REFCURSOR to List
         obtener = new SimpleJdbcCall(jdbcTemplate)
                 .withProcedureName("SP_GET_PRODUCTO")
+                .returningResultSet("OUT_PC_GET_PRODUCTO",
+                        BeanPropertyRowMapper.newInstance(Producto.class));
+        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_PRODUCTO")
                 .returningResultSet("OUT_PC_GET_PRODUCTO",
                         BeanPropertyRowMapper.newInstance(Producto.class));
         //actualizar
@@ -115,7 +120,7 @@ public class ProductoDao {
         return result;
     }
     
-    //obtener
+    //obtener por id
     public List<Producto> obtener(Long id) {
 
         log.info("SP_GET_PRODUCTO.obtener...");
@@ -123,6 +128,20 @@ public class ProductoDao {
         SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_producto_id", id);
 
         Map out = obtener.execute(paramaters);
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_PRODUCTO");
+        }
+    }    
+    
+    //obtener todo
+    public List<Producto> obtenerTodo() {
+
+        log.info("SP_GET_ALL_PRODUCTO.obtenerTodo...");
+
+        Map out = obtenerTodo.execute();
 
         if (out == null) {
             return Collections.emptyList();
