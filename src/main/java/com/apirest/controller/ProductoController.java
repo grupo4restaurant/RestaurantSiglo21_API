@@ -61,9 +61,9 @@ public class ProductoController {
         return dao.obtener(id);
     }
     
-    @GetMapping("/productos")
-    public List<Producto> ObtenerProductos() {               
-        return dao.obtenerTodo();
+    @GetMapping("/productos/{id}")
+    public List<Producto> ObtenerProductosPorCategoria(@PathVariable("id") long id) {               
+        return dao.obtenerPorCategoria(id);
     }
     
 }

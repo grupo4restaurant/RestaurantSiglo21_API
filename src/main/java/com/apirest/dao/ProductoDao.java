@@ -30,7 +30,7 @@ public class ProductoDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
-    private SimpleJdbcCall obtenerTodo;
+    private SimpleJdbcCall obtenerPorCategoria;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -44,8 +44,8 @@ public class ProductoDao {
                 .withProcedureName("SP_GET_PRODUCTO")
                 .returningResultSet("OUT_PC_GET_PRODUCTO",
                         BeanPropertyRowMapper.newInstance(Producto.class));
-        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
-                .withProcedureName("SP_GET_ALL_PRODUCTO")
+        obtenerPorCategoria = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_PRODUCTO_BY_IDCATEGORIA")
                 .returningResultSet("OUT_PC_GET_PRODUCTO",
                         BeanPropertyRowMapper.newInstance(Producto.class));
         //actualizar
@@ -136,12 +136,14 @@ public class ProductoDao {
         }
     }    
     
-    //obtener todo
-    public List<Producto> obtenerTodo() {
+    //obtener POR CATEGORIA
+    public List<Producto> obtenerPorCategoria(Long id) {
 
-        log.info("SP_GET_ALL_PRODUCTO.obtenerTodo...");
+        log.info("SP_GET_PRODUCTO_BY_IDCATEGORIA.obtenerPorCategoria...");
+        
+        SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_CAT_PROD_ID", id);
 
-        Map out = obtenerTodo.execute();
+        Map out = obtenerPorCategoria.execute(paramaters);
 
         if (out == null) {
             return Collections.emptyList();
