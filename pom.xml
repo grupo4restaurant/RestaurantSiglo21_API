@@ -34,13 +34,21 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         
+          <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>19.3.0.0</version>
+        </dependency>
+        
+        
+        <!--
         <dependency>
-            <groupId>com.oracle</groupId>
+            <groupId>com.oracle.ojdbc</groupId>
             <artifactId>ojdbc7</artifactId>
             <version>12.1.0.2.0</version>
             <scope>runtime</scope>
         </dependency>
-        
+        -->
         
         <!--
         <dependency>
@@ -53,7 +61,7 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc8</artifactId>
-            <version>18.4.0.0</version>
+            <version>19.3.0.0</version>
             <scope>runtime</scope>
         </dependency>
         
