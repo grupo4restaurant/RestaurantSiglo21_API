@@ -37,14 +37,15 @@ public class RolController {
     RolDao dao;
 
     @PutMapping("/rol")
-    public boolean agregarRol(@RequestBody @Valid Rol obj) {
+    public Optional agregarRol(@RequestBody @Valid Rol obj) {
         Optional id = dao.crear(obj); 
-        return id.isPresent();
+        return id;
     }
 
     @PostMapping("/rol")
     public boolean actualizar(@RequestBody @Valid Rol obj) {
         Optional estado = dao.actualizar(obj); 
+        
         return estado.isPresent();
     }
 
