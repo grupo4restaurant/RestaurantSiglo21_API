@@ -51,12 +51,16 @@ public class ReservaDao {
 
     //insertar
     public Optional crear(Reserva obj){
-        SqlParameterSource in = new MapSqlParameterSource().addValue("IN_MESA_ID", obj.getMesa_id())
+        SqlParameterSource in = new MapSqlParameterSource()
                                                             .addValue("IN_FECHA", obj.getFecha())
                                                             .addValue("IN_CANTIDAD_PERSONA", obj.getCantidad_persona())
                                                             .addValue("IN_RUT_CLIENTE", obj.getRut_cliente())
                                                             .addValue("IN_E_MAIL_CLIENTE", obj.getE_mail_cliente())
-                                                            .addValue("IN_FONO_CLIENTE", obj.getFono_cliente());
+                                                            .addValue("IN_FONO_CLIENTE", obj.getFono_cliente())
+                                                            .addValue("IN_NOMBRE", obj.getNombre())
+                                                            .addValue("IN_HORA_INICIO", obj.getHora_inicio())
+                                                            .addValue("IN_COMENTARIOS", obj.getComentarios());
+                                                            
                                                            
         Optional result = Optional.empty();
         
@@ -76,12 +80,14 @@ public class ReservaDao {
     //actualizar
     public Optional actualizar(Reserva obj){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_RESERVA_ID", obj.getReserva_id())
-                                                           .addValue("IN_MESA_ID", obj.getMesa_id())
                                                             .addValue("IN_FECHA", obj.getFecha())
                                                             .addValue("IN_CANTIDAD_PERSONA", obj.getCantidad_persona())
                                                             .addValue("IN_RUT_CLIENTE", obj.getRut_cliente())
                                                             .addValue("IN_E_MAIL_CLIENTE", obj.getE_mail_cliente())
-                                                            .addValue("IN_FONO_CLIENTE", obj.getFono_cliente());
+                                                            .addValue("IN_FONO_CLIENTE", obj.getFono_cliente())
+                                                            .addValue("IN_NOMBRE", obj.getNombre())
+                                                            .addValue("IN_HORA_INICIO", obj.getHora_inicio())
+                                                            .addValue("IN_COMENTARIOS", obj.getComentarios());
         Optional result = Optional.empty();
         
         try{
