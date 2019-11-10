@@ -44,14 +44,16 @@ public class DominioController {
 
     @PostMapping("/dominio")
     public boolean actualizarDominio(@RequestBody @Valid Dominio obj) {
-        Optional estado = dao.actualizar(obj); 
-        return estado.isPresent();
+        Integer estado = dao.actualizar(obj); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @DeleteMapping("/dominio/{id}")
     public boolean borrarDominio(@PathVariable("id") long id) {
-        Optional estado = dao.borrar(id); 
-        return estado.isPresent();
+        Integer estado = dao.borrar(id); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @GetMapping("/dominio/{id}")

@@ -46,14 +46,16 @@ public class Stock_ProductoController {
 
     @PostMapping("/stock_producto")
     public boolean actualizarDominio(@RequestBody @Valid Stock_Producto obj) {
-        Optional estado = dao.actualizar(obj); 
-        return estado.isPresent();
+        Integer estado = dao.actualizar(obj); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @DeleteMapping("/stock_producto/{id}")
     public boolean borrarDominio(@PathVariable("id") long id) {
-        Optional estado = dao.borrar(id); 
-        return estado.isPresent();
+        Integer estado = dao.borrar(id); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @GetMapping("/stock_producto/{id}")

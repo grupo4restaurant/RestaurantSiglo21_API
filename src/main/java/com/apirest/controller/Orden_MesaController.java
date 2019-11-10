@@ -48,14 +48,16 @@ public class Orden_MesaController {
 
     @PostMapping("/orden_mesa")
     public boolean actualizarOrden_Mesa(@RequestBody @Valid Orden_Mesa obj) {
-        Optional estado = dao.actualizar(obj); 
-        return estado.isPresent();
+        Integer estado = dao.actualizar(obj); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @DeleteMapping("/orden_mesa/{id}")
     public boolean borrarOrden_Mesa(@PathVariable("id") long id) {
-        Optional estado = dao.borrar(id); 
-        return estado.isPresent();
+        Integer estado = dao.borrar(id); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @GetMapping("/orden_mesa/{id}")

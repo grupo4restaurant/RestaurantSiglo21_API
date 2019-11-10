@@ -78,13 +78,13 @@ public class Detalle_Orden_MesaDao {
     }
     
     //actualizar
-    public Optional actualizar(Detalle_Orden_Mesa obj){
+    public Integer actualizar(Detalle_Orden_Mesa obj){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_det_ord_mesa_id", obj.getDet_ord_mesa_id())
                                                            .addValue("IN_menu_id", obj.getMenu_id())
                                                            .addValue("IN_order_mesa_id", obj.getOrder_mesa_id())
                                                             .addValue("IN_cantidad", obj.getCantidad())
                                                             .addValue("IN_estado", obj.getEstado());
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = actualizar.execute(in);
@@ -92,7 +92,7 @@ public class Detalle_Orden_MesaDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException
@@ -102,9 +102,9 @@ public class Detalle_Orden_MesaDao {
     }
     
     //borrar
-    public Optional borrar(Long id){
+    public Integer borrar(Long id){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_det_ord_mesa_id", id);
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = borrar.execute(in);
@@ -112,7 +112,7 @@ public class Detalle_Orden_MesaDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException

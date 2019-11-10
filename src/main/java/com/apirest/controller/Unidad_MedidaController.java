@@ -52,14 +52,16 @@ public class Unidad_MedidaController {
 
     @PostMapping("/unidad_medida")
     public boolean actualizarUsuario(@RequestBody @Valid Unidad_Medida obj) {
-        Optional estado = dao.actualizar(obj); 
-        return estado.isPresent();
+        Integer estado = dao.actualizar(obj); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @DeleteMapping("/unidad_medida/{id}")
     public boolean borrarUsuario(@PathVariable("id") long id) {
-        Optional estado = dao.borrar(id); 
-        return estado.isPresent();
+        Integer estado = dao.borrar(id); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @GetMapping("/unidad_medida/{id}")

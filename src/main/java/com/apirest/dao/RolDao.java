@@ -83,11 +83,11 @@ public class RolDao {
         }
     }    
     //actualizar
-    public Optional actualizar(Rol rol){
+    public Integer actualizar(Rol rol){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_ROL_ID", rol.getRol_id())
                                                            .addValue("IN_ROL_DESC", rol.getRol_desc())
                                                            .addValue("IN_ROL_INDEX", rol.getRol_index());
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = actualizar.execute(in);
@@ -95,7 +95,7 @@ public class RolDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException
@@ -104,9 +104,9 @@ public class RolDao {
         return result;
     }
     //borrar
-    public Optional borrar(Long id){
+    public Integer borrar(Long id){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_ROL_ID", id);
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = borrar.execute(in);
@@ -114,7 +114,7 @@ public class RolDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException

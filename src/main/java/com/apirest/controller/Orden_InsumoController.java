@@ -48,14 +48,16 @@ public class Orden_InsumoController {
 
     @PostMapping("/orden_insumo")
     public boolean actualizarReserva(@RequestBody @Valid Orden_Insumo obj) {
-        Optional estado = dao.actualizar(obj); 
-        return estado.isPresent();
+        Integer estado = dao.actualizar(obj); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @DeleteMapping("/orden_insumo/{id}")
     public boolean borrarReserva(@PathVariable("id") long id) {
-        Optional estado = dao.borrar(id); 
-        return estado.isPresent();
+        Integer estado = dao.borrar(id); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @GetMapping("/orden_insumo/{id}")

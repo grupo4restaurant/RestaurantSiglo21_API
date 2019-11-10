@@ -77,7 +77,7 @@ public class Orden_CompraDao {
     }
     
     //actualizar
-    public Optional actualizar(Orden_Compra obj){
+    public Integer actualizar(Orden_Compra obj){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_orden_compra_id", obj.getOrden_compra_id())
                                                            .addValue("IN_total_val_neto", obj.getTotal_val_neto())
                                                             .addValue("IN_total_val_iva", obj.getTotal_val_iva())
@@ -85,7 +85,7 @@ public class Orden_CompraDao {
                                                             .addValue("IN_fecha_gestionada", obj.getFecha_gestionada())
                                                             .addValue("IN_fecha_recepcion", obj.getFecha_recepcion())
                                                             .addValue("IN_estado", obj.getEstado());
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = actualizar.execute(in);
@@ -93,7 +93,7 @@ public class Orden_CompraDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException
@@ -102,9 +102,9 @@ public class Orden_CompraDao {
         return result;
     }
     //borrar
-    public Optional borrar(Long id){
+    public Integer borrar(Long id){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_orden_compra_id", id);
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = borrar.execute(in);
@@ -112,7 +112,7 @@ public class Orden_CompraDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException

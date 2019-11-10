@@ -73,13 +73,13 @@ public class RecetaDao {
     }
     
     //actualizar
-    public Optional actualizar(Receta obj){
+    public Integer actualizar(Receta obj){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_RECETA_ID", obj.getReceta_id())
                                                            .addValue("IN_ITEM_ID", obj.getItem_id())
                                                            .addValue("IN_PRECEDIMIENTO", obj.getPrecedimiento())
                                                             .addValue("IN_NOMBRE", obj.getNombre())
                                                             .addValue("IN_TIEMPO_PREP", obj.getTiempo_prep());
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = actualizar.execute(in);
@@ -87,7 +87,7 @@ public class RecetaDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException
@@ -97,9 +97,9 @@ public class RecetaDao {
     }
     
     //borrar
-    public Optional borrar(Long id){
+    public Integer borrar(Long id){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_RECETA_ID", id);
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = borrar.execute(in);
@@ -107,7 +107,7 @@ public class RecetaDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException

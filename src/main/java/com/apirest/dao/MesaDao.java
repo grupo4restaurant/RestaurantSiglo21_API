@@ -73,12 +73,12 @@ public class MesaDao {
     }
     
     //actualizar
-    public Optional actualizar(Mesa obj){
+    public Integer actualizar(Mesa obj){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_MESA_ID", obj.getMesa_id())
                                                            .addValue("IN_MESA_NUMERO", obj.getMesa_numero())
                                                            .addValue("IN_MESA_ESTADO", obj.getMesa_estado())
                                                             .addValue("IN_MESA_CAPACIDAD", obj.getMesa_capacidad());
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = actualizar.execute(in);
@@ -86,7 +86,7 @@ public class MesaDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException
@@ -96,9 +96,9 @@ public class MesaDao {
     }
     
     //borrar
-    public Optional borrar(Long id){
+    public Integer borrar(Long id){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_MESA_ID", id);
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = borrar.execute(in);
@@ -106,7 +106,7 @@ public class MesaDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException

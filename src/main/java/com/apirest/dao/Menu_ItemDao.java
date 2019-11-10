@@ -74,13 +74,13 @@ public class Menu_ItemDao {
     }
     
     //actualizar
-    public Optional actualizar(Menu_Item obj){
+    public Integer actualizar(Menu_Item obj){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_ITEM_ID", obj.getItem_id())
                                                            .addValue("IN_CAT_MENU_ID", obj.getCat_menu_id())
                                                            .addValue("IN_ITEM_NOMBRE", obj.getItem_nombre())
                                                             .addValue("IN_ITEM_DESC", obj.getItem_desc())
                                                             .addValue("IN_ITEM_VAL", obj.getItem_val());
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = actualizar.execute(in);
@@ -88,7 +88,7 @@ public class Menu_ItemDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException
@@ -98,9 +98,9 @@ public class Menu_ItemDao {
     }
     
     //borrar
-    public Optional borrar(Long id){
+    public Integer borrar(Long id){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_ITEM_ID", id);
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = borrar.execute(in);
@@ -108,7 +108,7 @@ public class Menu_ItemDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException

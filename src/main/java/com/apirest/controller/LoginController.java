@@ -44,14 +44,16 @@ public class LoginController {
 
     @PostMapping("/login")
     public boolean actualizarNota(@RequestBody @Valid Login login) {
-        Optional estado = loginDao.actualizar(login); 
-        return estado.isPresent();
+        Integer estado = loginDao.actualizar(login); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @DeleteMapping("/login/{id}")
     public boolean borrarNota(@PathVariable("id") long id) {
-        Optional estado = loginDao.borrar(id); 
-        return estado.isPresent();
+        Integer estado = loginDao.borrar(id); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @GetMapping("/login/{usuario_id}")

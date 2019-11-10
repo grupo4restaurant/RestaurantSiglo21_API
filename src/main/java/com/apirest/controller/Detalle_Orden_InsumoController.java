@@ -46,14 +46,16 @@ public class Detalle_Orden_InsumoController {
 
     @PostMapping("/detalle_orden_insumo")
     public boolean actualizarDetalleOrdenInsumo(@RequestBody @Valid Detalle_Orden_Insumo obj) {
-        Optional estado = dao.actualizar(obj); 
-        return estado.isPresent();
+        Integer estado = dao.actualizar(obj); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @DeleteMapping("/detalle_orden_insumo/{id}")
     public boolean borrarDetalleOrdenInsumo(@PathVariable("id") long id) {
-        Optional estado = dao.borrar(id); 
-        return estado.isPresent();
+        Integer estado = dao.borrar(id); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @GetMapping("/detalle_orden_insumo/{id}")

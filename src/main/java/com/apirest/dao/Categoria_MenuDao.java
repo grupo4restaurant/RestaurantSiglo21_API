@@ -72,11 +72,11 @@ public class Categoria_MenuDao {
     }
     
     //actualizar
-    public Optional actualizar(Categoria_Menu obj){
+    public Integer actualizar(Categoria_Menu obj){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_CAT_MENU_ID", obj.getCat_menu_id())
                                                            .addValue("IN_CAT_MENU_NOMBRE", obj.getCat_menu_nombre())
                                                            .addValue("IN_CAT_FASE", obj.getCat_fase());
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = actualizar.execute(in);
@@ -84,7 +84,7 @@ public class Categoria_MenuDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException
@@ -94,9 +94,9 @@ public class Categoria_MenuDao {
     }
     
     //borrar
-    public Optional borrar(Long id){
+    public Integer borrar(Long id){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_CAT_MENU_ID", id);
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = borrar.execute(in);
@@ -104,7 +104,7 @@ public class Categoria_MenuDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException

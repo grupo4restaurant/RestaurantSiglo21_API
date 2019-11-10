@@ -73,13 +73,13 @@ public class DominioDao {
     }
     
     //actualizar
-    public Optional actualizar(Dominio obj){
+    public Integer actualizar(Dominio obj){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_DOM_ID", obj.getDom_id())
                                                            .addValue("IN_DOM_VAL_DOM", obj.getDom_val_dom())
                                                            .addValue("IN_DOM_DESC", obj.getDom_desc())
                                                             .addValue("IN_DOM_VAL", obj.getDom_val())
                                                             .addValue("IN_DOM_ESTADO", obj.getDom_estado());
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = actualizar.execute(in);
@@ -87,7 +87,7 @@ public class DominioDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException
@@ -97,9 +97,9 @@ public class DominioDao {
     }
     
     //borrar
-    public Optional borrar(Long id){
+    public Integer borrar(Long id){
         SqlParameterSource in = new MapSqlParameterSource().addValue("IN_DOM_ID", id);
-        Optional result = Optional.empty();
+        Integer result = 0;
         
         try{
             Map out = borrar.execute(in);
@@ -107,7 +107,7 @@ public class DominioDao {
                 String OUT_ID_SALIDA = (String) out.get("OUT_GLOSA");
                 BigDecimal OUT_ESTADO = (BigDecimal) out.get("OUT_ESTADO");
                 
-                result = Optional.of(OUT_ESTADO);
+                result = OUT_ESTADO.intValue();
             }
         }catch(Exception e){
             // ORA-01403: no data found, or any java.sql.SQLException

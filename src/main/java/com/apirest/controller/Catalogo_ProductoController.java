@@ -46,14 +46,16 @@ public class Catalogo_ProductoController {
 
     @PostMapping("/catalogo_producto")
     public boolean actualizarNota(@RequestBody @Valid Catalogo_Producto obj) {
-        Optional estado = dao.actualizar(obj); 
-        return estado.isPresent();
+        Integer estado = dao.actualizar(obj); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @DeleteMapping("/catalogo_producto/{id}")
     public boolean borrarNota(@PathVariable("id") long id) {
-        Optional estado = dao.borrar(id); 
-        return estado.isPresent();
+        Integer estado = dao.borrar(id); 
+        boolean success = Optional.of(estado).equals(Optional.of(1));
+        return success;
     }
 
     @GetMapping("/catalogo_producto/{id}")
