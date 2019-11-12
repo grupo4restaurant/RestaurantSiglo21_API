@@ -36,18 +36,18 @@ public class ReservaController {
     @Autowired
     ReservaDao dao;
 
-    @PutMapping("/reserva")
+    @PostMapping("/reserva")
     public boolean agregarReserva(@RequestBody @Valid Reserva obj) {
         Optional id = dao.crear(obj); 
         return id.isPresent();
     }
 
-    @PostMapping("/reserva")
-    public boolean actualizarReserva(@RequestBody @Valid Reserva obj) {
-        Integer estado = dao.actualizar(obj); 
-        boolean success = Optional.of(estado).equals(Optional.of(1));
-        return success;
-    }
+    //@PostMapping("/reserva")
+    //public boolean actualizarReserva(@RequestBody @Valid Reserva obj) {
+      //  Integer estado = dao.actualizar(obj); 
+        //boolean success = Optional.of(estado).equals(Optional.of(1));
+        //return success;
+    //}
 
     @DeleteMapping("/reserva/{id}")
     public boolean borrarReserva(@PathVariable("id") long id) {
