@@ -31,6 +31,7 @@ public class MesaDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
+    private SimpleJdbcCall obtenerPorEstado;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -48,6 +49,11 @@ public class MesaDao {
         actualizar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_UPD_MESA");
         //borrar
         borrar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_DEL_MESA");
+        //obtener por estado
+        obtenerPorEstado = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_MESA_BY_ESTADO")
+                .returningResultSet("OUT_PC_GET_MESA",
+                        BeanPropertyRowMapper.newInstance(Mesa.class));
     }
 
     //insertar
@@ -123,6 +129,21 @@ public class MesaDao {
         SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_MESA_ID", id);
 
         Map out = obtener.execute(paramaters);
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_MESA");
+        }
+    }    
+    
+    public List<Mesa> obtenerPorEstado(Long estado) {
+
+        log.info("SP_GET_ALL_MESA_BY_ESTADO.obtenerPorEstado...");
+
+        SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_MESA_ESTADO", estado);
+
+        Map out = obtenerPorEstado.execute(paramaters);
 
         if (out == null) {
             return Collections.emptyList();

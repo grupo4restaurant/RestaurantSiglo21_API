@@ -67,4 +67,9 @@ public class ProveedorController {
         return dao.obtener(id);
     }
     
+    @GetMapping("/proveedores")
+    public List<Proveedor> ObtenerProveedores() {               
+        return dao.obtenerTodo();
+    }
+    
 }

@@ -61,4 +61,9 @@ public class MesaController {
         return dao.obtener(id);
     }
     
+    @GetMapping("/mesas/{estado}")
+    public List<Mesa> ObtenerMesaPorEstado(@PathVariable("estado") long estado) {               
+        return dao.obtenerPorEstado(estado);
+    }
+    
 }

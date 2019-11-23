@@ -32,6 +32,7 @@ public class ProveedorDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
+    private SimpleJdbcCall obtenerTodo;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -49,6 +50,11 @@ public class ProveedorDao {
         actualizar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_UPD_PROVEEDOR");
         //borrar
         borrar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_DEL_PROVEEDOR");
+        //obtener todo
+        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_PROVEEDOR")
+                .returningResultSet("OUT_PC_GET_PROVEEDOR",
+                        BeanPropertyRowMapper.newInstance(Proveedor.class));
     }
 
     //insertar
@@ -127,6 +133,20 @@ public class ProveedorDao {
         SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_proveedor_id", id);
 
         Map out = obtener.execute(paramaters);
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_PROVEEDOR");
+        }
+    }    
+    //obtener todo
+    public List<Proveedor> obtenerTodo() {
+
+        log.info("SP_GET_ALL_PROVEEDOR.obtenerTodo...");
+
+        
+        Map out = obtenerTodo.execute();
 
         if (out == null) {
             return Collections.emptyList();
