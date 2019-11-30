@@ -61,4 +61,8 @@ public class Menu_ItemController {
         return dao.obtener(id);
     }
     
+    @GetMapping("/menu_items")
+    public List<Menu_Item> ObtenerTodoMenu_Item() {               
+        return dao.obtenerTodo();
+    }
 }
