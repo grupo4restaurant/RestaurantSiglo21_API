@@ -65,4 +65,9 @@ public class Menu_ItemController {
     public List<Menu_Item> ObtenerTodoMenu_Item() {               
         return dao.obtenerTodo();
     }
+    
+    @GetMapping("/menu_items/{id}")
+    public List<Menu_Item> ObtenerTodoMenu_Items_Por_IdCategoria(@PathVariable("id") long id) {               
+        return dao.obtenerTodoPorIdCategoria(id); 
+    }
 }

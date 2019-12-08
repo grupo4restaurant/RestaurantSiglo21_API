@@ -31,6 +31,7 @@ public class Categoria_MenuDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
+    private SimpleJdbcCall obtenerTodo;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -48,6 +49,12 @@ public class Categoria_MenuDao {
         actualizar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_UPD_CATEGORIA_MENU");
         //borrar
         borrar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_DEL_CATEGORIA_MENU");
+        //obtener todo
+        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_CATEGORIA_MENU")
+                .returningResultSet("OUT_PC_GET_CATEGORIA_MENU",
+                        BeanPropertyRowMapper.newInstance(Categoria_Menu.class));
+        
     }
 
     //insertar
@@ -121,6 +128,20 @@ public class Categoria_MenuDao {
         SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_CAT_MENU_ID", id);
 
         Map out = obtener.execute(paramaters);
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_CATEGORIA_MENU");
+        }
+    }    
+    
+    //obtener todo
+    public List<Categoria_Menu> obtenerTodo() {
+
+        log.info("SP_GET_ALL_CATEGORIA_MENU.obtenerTodo...");
+
+        Map out = obtenerTodo.execute();
 
         if (out == null) {
             return Collections.emptyList();

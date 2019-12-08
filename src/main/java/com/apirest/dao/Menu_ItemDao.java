@@ -32,6 +32,7 @@ public class Menu_ItemDao {
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
     private SimpleJdbcCall obtenerTodo;
+    private SimpleJdbcCall obtenerTodoPorIdCategoria;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -51,6 +52,10 @@ public class Menu_ItemDao {
         borrar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_DEL_MENU_ITEM");
         obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
                 .withProcedureName("SP_GET_ALL_MENU_ITEM")
+                .returningResultSet("OUT_PC_GET_MENU_ITEM",
+                        BeanPropertyRowMapper.newInstance(Menu_Item.class));
+        obtenerTodoPorIdCategoria = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_MENU_ITEM_BY_CATEG_ID")
                 .returningResultSet("OUT_PC_GET_MENU_ITEM",
                         BeanPropertyRowMapper.newInstance(Menu_Item.class));
     }
@@ -144,6 +149,22 @@ public class Menu_ItemDao {
         log.info("SP_GET_All_MENU_ITEM.obtenerTodo...");
 
         Map out = obtenerTodo.execute();
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_MENU_ITEM");
+        }
+    }    
+    
+    //obtenerTodo por id categoria
+    public List<Menu_Item> obtenerTodoPorIdCategoria(Long idCategoria) {
+
+        log.info("SP_GET_MENU_ITEM_BY_CATEG_ID.obtenerTodoPorIdCategoria...");
+        
+        SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_CAT_MENU_ID", idCategoria);
+
+        Map out = obtenerTodoPorIdCategoria.execute(paramaters);
 
         if (out == null) {
             return Collections.emptyList();

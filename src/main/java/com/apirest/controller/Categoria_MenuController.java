@@ -58,7 +58,12 @@ public class Categoria_MenuController {
     }
 
     @GetMapping("/categoria_menu/{id}")
-    public List<Categoria_Menu> Obtenercategoria_menuPorID(@PathVariable("id") long id) {               
+    public List<Categoria_Menu> ObtenerCategoria_menuPorID(@PathVariable("id") long id) {               
         return dao.obtener(id);
+    }
+    
+    @GetMapping("/categoria_menus")
+    public List<Categoria_Menu> ObtenerTodoCategoria_menu() {               
+        return dao.obtenerTodo();
     }
 }
