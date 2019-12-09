@@ -7,6 +7,7 @@ package com.apirest.controller;
 
 import com.apirest.dao.Menu_ItemDao;
 import com.apirest.model.Menu_Item;
+import com.apirest.model.Menu_Item_Model;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -69,5 +70,10 @@ public class Menu_ItemController {
     @GetMapping("/menu_items/{id}")
     public List<Menu_Item> ObtenerTodoMenu_Items_Por_IdCategoria(@PathVariable("id") long id) {               
         return dao.obtenerTodoPorIdCategoria(id); 
+    }
+    
+    @GetMapping("/menu_item_categoria")
+    public List<Menu_Item_Model> ObtenerTodoMenu_Item_Categoria() {               
+        return dao.obtenerTodoCruceCategoria();
     }
 }
