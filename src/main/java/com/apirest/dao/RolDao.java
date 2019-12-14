@@ -30,6 +30,7 @@ public class RolDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
+    private SimpleJdbcCall obtenerTodo;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -47,6 +48,10 @@ public class RolDao {
         actualizar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_UPD_ROL");
         //borrar
         borrar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_DEL_ROL");
+        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_ROL")
+                .returningResultSet("OUT_PC_GET_ROL",
+                        BeanPropertyRowMapper.newInstance(Rol.class));
     }
 
     //insertar
@@ -122,4 +127,18 @@ public class RolDao {
         }
         return result;
     }
+    //obtener todo
+    public List<Rol> obtenerTodo() {
+
+        log.info("SP_GET_ALL_ROL.obtenerTodo...");
+        
+        Map out = obtenerTodo.execute();
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_ROL");
+        }
+    }    
+    
 }

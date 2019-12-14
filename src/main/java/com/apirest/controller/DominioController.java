@@ -56,9 +56,9 @@ public class DominioController {
         return success;
     }
 
-    @GetMapping("/dominio/{id}")
-    public List<Dominio> ObtenerDominioPorID(@PathVariable("id") long id) {               
-        return dao.obtener(id);
+    @GetMapping("/dominio/{dom_val_dom}")
+    public List<Dominio> ObtenerDominioPorDomValDom(@PathVariable("dom_val_dom") String dom_val_dom) {               
+        return dao.obtener(dom_val_dom);
     }
     
 }

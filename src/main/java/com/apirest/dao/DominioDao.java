@@ -117,11 +117,11 @@ public class DominioDao {
     }
     
     //obtener
-    public List<Dominio> obtener(Long id) {
+    public List<Dominio> obtener(String dom_val_dom) {
 
         log.info("SP_GET_DOMINIO.obtener...");
 
-        SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_DOM_ID", id);
+        SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_DOM_VAL_DOM", dom_val_dom);
 
         Map out = obtener.execute(paramaters);
 

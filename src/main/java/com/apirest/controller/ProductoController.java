@@ -68,4 +68,9 @@ public class ProductoController {
         return dao.obtenerPorCategoria(id);
     }
     
+    @GetMapping("/productos")
+    public List<Producto> ObtenerTodo() {               
+        return dao.obtenerTodo();
+    }
+    
 }

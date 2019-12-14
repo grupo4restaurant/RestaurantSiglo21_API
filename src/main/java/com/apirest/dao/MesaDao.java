@@ -1,6 +1,6 @@
 package com.apirest.dao;
 
-import com.apirest.model.Dominio;
+
 import com.apirest.model.Mesa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +32,7 @@ public class MesaDao {
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
     private SimpleJdbcCall obtenerPorEstado;
+    private SimpleJdbcCall obtenerTodo;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -52,6 +53,11 @@ public class MesaDao {
         //obtener por estado
         obtenerPorEstado = new SimpleJdbcCall(jdbcTemplate)
                 .withProcedureName("SP_GET_ALL_MESA_BY_ESTADO")
+                .returningResultSet("OUT_PC_GET_MESA",
+                        BeanPropertyRowMapper.newInstance(Mesa.class));
+        //OBTENER TODO
+        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_MESA")
                 .returningResultSet("OUT_PC_GET_MESA",
                         BeanPropertyRowMapper.newInstance(Mesa.class));
     }
@@ -144,6 +150,19 @@ public class MesaDao {
         SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_MESA_ESTADO", estado);
 
         Map out = obtenerPorEstado.execute(paramaters);
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_MESA");
+        }
+    }    
+    //obtener todo
+    public List<Mesa> obtenerTodo() {
+
+        log.info("SP_GET_ALL_MESA.obtenerTodo...");
+
+        Map out = obtenerTodo.execute();
 
         if (out == null) {
             return Collections.emptyList();

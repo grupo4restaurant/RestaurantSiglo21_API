@@ -1,6 +1,6 @@
 package com.apirest.dao;
 
-import com.apirest.model.Rol;
+
 import com.apirest.model.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +31,7 @@ public class UsuarioDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
+    private SimpleJdbcCall obtenerTodo;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -48,6 +49,10 @@ public class UsuarioDao {
         actualizar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_UPD_USUARIO");
         //borrar
         borrar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_DEL_USUARIO");
+        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_USUARIO")
+                .returningResultSet("OUT_PC_GET_USUARIO",
+                        BeanPropertyRowMapper.newInstance(Usuario.class));
     }
 
     //insertar
@@ -56,7 +61,7 @@ public class UsuarioDao {
                                                            .addValue("IN_NOMBRE", obj.getNombre())
                                                             .addValue("IN_AP_PATERNO", obj.getAp_paterno())
                                                             .addValue("IN_AP_MATERNO", obj.getAp_materno())
-                                                            .addValue("IN_E_MAIL", obj.getE_mail())
+//                                                            .addValue("IN_E_MAIL", obj.getE_mail())
                                                             .addValue("IN_FONO", obj.getFono());
         Optional result = Optional.empty();
         
@@ -131,4 +136,17 @@ public class UsuarioDao {
         }
         return result;
     }
+    //obtener todo
+    public List<Usuario> obtenerTodo() {
+
+        log.info("SP_GET_ALL_USUARIO.obtenerTodo...");
+
+        Map out = obtenerTodo.execute();
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_USUARIO");
+        }
+    }    
 }

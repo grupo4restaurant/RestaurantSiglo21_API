@@ -31,6 +31,7 @@ public class Stock_ProductoDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
+    private SimpleJdbcCall obtenerTodo;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -48,6 +49,10 @@ public class Stock_ProductoDao {
         actualizar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_UPD_STOCK_PRODUCTO");
         //borrar
         borrar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_DEL_STOCK_PRODUCTO");
+        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_STOCK_PRODUCTO")
+                .returningResultSet("OUT_PC_GET_STOCK_PRODUCTO",
+                        BeanPropertyRowMapper.newInstance(Stock_Producto.class));
     }
 
     //insertar
@@ -120,7 +125,7 @@ public class Stock_ProductoDao {
 
         log.info("SP_GET_STOCK_PRODUCTO.obtener...");
 
-        SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_STOCK_ID", id);
+        SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_PRODUCTO_ID", id);
 
         Map out = obtener.execute(paramaters);
 
@@ -130,4 +135,19 @@ public class Stock_ProductoDao {
             return (List) out.get("OUT_PC_GET_STOCK_PRODUCTO");
         }
     }    
+    
+    //obtener todo
+    public List<Stock_Producto> obtenerTodo() {
+
+        log.info("SP_GET_All_STOCK_PRODUCTO.obtenerTodo...");
+
+        Map out = obtenerTodo.execute();
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_STOCK_PRODUCTO");
+        }
+    }    
+    
 }

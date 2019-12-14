@@ -5,11 +5,7 @@
  */
 package com.apirest.controller;
 
-import com.apirest.dao.LoginDao;
-import com.apirest.dao.RolDao;
 import com.apirest.dao.UsuarioDao;
-import com.apirest.model.Login;
-import com.apirest.model.Rol;
 import com.apirest.model.Usuario;
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +59,11 @@ public class UsuarioController {
     @GetMapping("/usuario/{id}")
     public List<Usuario> ObtenerUsuarioPorID(@PathVariable("id") long id) {               
         return dao.obtener(id);
+    }
+    
+    @GetMapping("/usuarios/")
+    public List<Usuario> ObtenerTodoUsuario() {               
+        return dao.obtenerTodo();
     }
     
 }

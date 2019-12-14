@@ -63,4 +63,9 @@ public class Stock_ProductoController {
         return dao.obtener(id);
     }
     
+    @GetMapping("/stock_productos")
+    public List<Stock_Producto> ObtenerStockProductoTodo() {               
+        return dao.obtenerTodo();
+    }
+    
 }

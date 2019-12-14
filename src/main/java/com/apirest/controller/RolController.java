@@ -63,5 +63,9 @@ public class RolController {
     public List<Rol> ObtenerPorUsuarioId(@PathVariable("id") long id) {               
         return dao.obtener(id);
     }
+    @GetMapping("/roles/")
+    public List<Rol> ObtenerTodoRoles() {               
+        return dao.obtenerTodo();
+    }
     
 }

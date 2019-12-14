@@ -66,4 +66,9 @@ public class MesaController {
         return dao.obtenerPorEstado(estado);
     }
     
+    @GetMapping("/mesa_todo")
+    public List<Mesa> ObtenerTodoMesa() {               
+        return dao.obtenerTodo();
+    }
+    
 }
