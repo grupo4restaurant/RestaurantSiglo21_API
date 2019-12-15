@@ -33,6 +33,7 @@ public class Orden_CompraDao {
     private SimpleJdbcCall crear;
     private SimpleJdbcCall actualizar;
     private SimpleJdbcCall borrar;
+    private SimpleJdbcCall obtenerTodo;
 
     // init SimpleJdbcCall
     @PostConstruct
@@ -50,6 +51,10 @@ public class Orden_CompraDao {
         actualizar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_UPD_ORDEN_COMPRA");
         //borrar
         borrar = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_DEL_ORDEN_COMPRA");
+        obtenerTodo = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("SP_GET_ALL_ORDEN_COMPRA")
+                .returningResultSet("OUT_PC_GET_ORDEN_COMPRA",
+                        BeanPropertyRowMapper.newInstance(Orden_Compra.class));
     }
 
     //insertar
@@ -129,6 +134,19 @@ public class Orden_CompraDao {
         SqlParameterSource paramaters = new MapSqlParameterSource().addValue("IN_orden_compra_id", id);
 
         Map out = obtener.execute(paramaters);
+
+        if (out == null) {
+            return Collections.emptyList();
+        } else {
+            return (List) out.get("OUT_PC_GET_ORDEN_COMPRA");
+        }
+    }    
+    //obtener todo
+    public List<Orden_Compra> obtenerTodo() {
+
+        log.info("SP_GET_ALL_ORDEN_COMPRA.obtenerTodo...");
+
+        Map out = obtenerTodo.execute();
 
         if (out == null) {
             return Collections.emptyList();

@@ -62,5 +62,9 @@ public class Orden_CompraController {
     public List<Orden_Compra> ObtenerOrden_CompraPorID(@PathVariable("id") long id) {               
         return dao.obtener(id);
     }
+    @GetMapping("/orden_compras")
+    public List<Orden_Compra> ObtenerOrden_CompraTodo() {               
+        return dao.obtenerTodo();
+    }
     
 }
